@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHM107 Online Practical - Jan 7th, 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c2461 0%, #1e3799 50%, #4a69bd 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Floating icons background */
+        #floating-icons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.1);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0.1;
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border-left: 8px solid #e74c3c;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .header h1 i {
+            color: #e74c3c;
+        }
+
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .date-badge {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Content sections */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            border-top: 5px solid;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-card h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .section-card h2 i {
+            font-size: 1.5rem;
+        }
+
+        .section-card ul, .section-card ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section-card li {
+            margin-bottom: 10px;
+            padding-left: 5px;
+        }
+
+        .section-card p {
+            margin-bottom: 15px;
+        }
+
+        /* Card colors */
+        .reporting-card {
+            border-top-color: #9b59b6;
+        }
+
+        .requirements-card {
+            border-top-color: #e67e22;
+        }
+
+        .safety-card {
+            border-top-color: #e74c3c;
+        }
+
+        .rules-card {
+            border-top-color: #3498db;
+        }
+
+        .emergency-card {
+            border-top-color: #1abc9c;
+        }
+
+        .housekeeping-card {
+            border-top-color: #f39c12;
+        }
+
+        /* Highlight boxes */
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .important {
+            border-left-color: #e74c3c;
+            background-color: #ffeaea;
+        }
+
+        .notice {
+            border-left-color: #3498db;
+            background-color: #e3f2fd;
+        }
+
+        /* Chat messages */
+        .chat-message {
+            background: #f1f8ff;
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-left: 4px solid #4a69bd;
+        }
+
+        .chat-message .sender {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer a {
+            color: #74b9ff;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating icons background -->
+    <div id="floating-icons"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-flask"></i> CHM107 Online Practical Session</h1>
+            <p class="subtitle">University of Lagos - Chemistry Laboratory Coursework</p>
+            <div class="date-badge">
+                <i class="far fa-calendar-alt"></i> January 7th, 2025
+            </div>
+        </header>
+
+        <!-- Main content -->
+        <div class="content-grid">
+            <!-- Lab Report Requirements -->
+            <section class="section-card reporting-card">
+                <h2><i class="fas fa-clipboard-list"></i> Lab Report Format</h2>
+                <p>Reports must follow the manual format with these sections:</p>
+                <ol>
+                    <li><strong>Date of experiment</strong></li>
+                    <li><strong>Title of experiment</strong></li>
+                    <li><strong>Aim of experiment</strong></li>
+                    <li><strong>Apparatus</strong> used</li>
+                    <li><strong>Results and calculations</strong></li>
+                    <li><strong>Conclusion</strong></li>
+                </ol>
+                <div class="highlight-box">
+                    <p><strong>Lab Notebook Requirements:</strong></p>
+                    <ul>
+                        <li>Complete all necessary info: Name, Matric No., Department, Level, Group/Batch Lab</li>
+                        <li>Treat as examination booklet</li>
+                        <li>No tearing, no tapes</li>
+                        <li>Cross out errors neatly</li>
+                    </ul>
+                </div>
+                <div class="chat-message">
+                    <div class="sender">Isabella Brown:</div>
+                    <div>Okay ma, Thank you ma</div>
+                </div>
+            </section>
+
+            <!-- Laboratory Requirements -->
+            <section class="section-card requirements-card">
+                <h2><i class="fas fa-tshirt"></i> Laboratory Requirements</h2>
+                <p><strong>Students must wear:</strong></p>
+                <ul>
+                    <li>Long-sleeved, knee-length lab coat</li>
+                    <li>Safety goggles</li>
+                    <li>Closed-toe, non-slip shoes</li>
+                </ul>
+                <p><strong>Students must bring:</strong></p>
+                <ul>
+                    <li>Laboratory manual</li>
+                    <li>Report book</li>
+                    <li>Scientific calculator</li>
+                </ul>
+                <div class="chat-message">
+                    <div class="sender">Ruth chinwinkpe Moses:</div>
+                    <div>Ruth chinwinkpe Moses</div>
+                </div>
+            </section>
+
+            <!-- Safety Rules -->
+            <section class="section-card safety-card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Safety Rules & Chemical Handling</h2>
+                <div class="highlight-box important">
+                    <p><strong>Why lab safety is important:</strong> To prevent accidents and ensure a secure learning environment.</p>
+                </div>
+                <p><strong>Chemical Handling Rules:</strong></p>
+                <ul>
+                    <li>Always read labels carefully</li>
+                    <li>Never use unlabelled chemicals</li>
+                    <li>Use a spatula or scoopula for solid chemicals</li>
+                    <li>Never touch chemicals with bare hands</li>
+                    <li>Do not smell or taste chemicals</li>
+                    <li>Never use metal spatulas with peroxides</li>
+                    <li>Always add acid to water, never water to acid</li>
+                    <li>Handle toxic/fume-producing chemicals only in a fume hood</li>
+                </ul>
+                <div class="chat-message">
+                    <div class="sender">Precious Odunola:</div>
+                    <div>These things are not in the lab manual</div>
+                </div>
+            </section>
+
+            <!-- General Rules -->
+            <section class="section-card rules-card">
+                <h2><i class="fas fa-clipboard"></i> General Laboratory Rules</h2>
+                <ul>
+                    <li>Do not use equipment or chemicals you do not understand</li>
+                    <li>Never perform unauthorized experiments</li>
+                    <li>Never work alone in the laboratory</li>
+                    <li>Work only during scheduled laboratory hours</li>
+                    <li>Hot glass looks like cold glass — handle with care</li>
+                    <li>Never use your mouth to fill a pipette</li>
+                    <li>Keep flammable materials away from flames</li>
+                    <li>Do not leave burners or heaters unattended</li>
+                    <li>Store bags and coats in designated areas</li>
+                </ul>
+                <p><strong>Know the locations of:</strong></p>
+                <ul>
+                    <li>Fire extinguishers</li>
+                    <li>Eyewash stations</li>
+                    <li>Safety showers</li>
+                    <li>Emergency exits</li>
+                    <li>First-aid boxes</li>
+                </ul>
+            </section>
+
+            <!-- Emergency Preparedness -->
+            <section class="section-card emergency-card">
+                <h2><i class="fas fa-first-aid"></i> Emergency Preparedness</h2>
+                <p><strong>If an accident occurs:</strong></p>
+                <ol>
+                    <li>Call for help immediately</li>
+                    <li>Inform the instructor or technologist</li>
+                    <li>Assist the injured person calmly</li>
+                    <li>Help with first aid if instructed</li>
+                    <li>Evacuate via nearest exit</li>
+                </ol>
+                <div class="highlight-box important">
+                    <p><strong>Important:</strong> All injuries, no matter how minor, must be reported immediately.</p>
+                </div>
+                <p><strong>Safety is everyone's responsibility:</strong></p>
+                <ul>
+                    <li>Follow instructions carefully</li>
+                    <li>Ask questions when unsure</li>
+                    <li>Protect yourself and others</li>
+                </ul>
+            </section>
+
+            <!-- Housekeeping Rules -->
+            <section class="section-card housekeeping-card">
+                <h2><i class="fas fa-broom"></i> Housekeeping Rules</h2>
+                <p><strong>A clean lab is a safe lab:</strong></p>
+                <ul>
+                    <li>Keep benches and aisles clear</li>
+                    <li>Clean your workspace at the end of each session</li>
+                    <li>Do not block sinks, drains, exits, or emergency equipment</li>
+                    <li>Check equipment for cracks or damage before use</li>
+                    <li>Never pour chemical waste into sinks</li>
+                </ul>
+                <p><strong>Dispose of:</strong></p>
+                <ul>
+                    <li>Chemical waste in labelled containers</li>
+                    <li>Broken glass in special glass bins</li>
+                    <li>Gloves, paper towels, and weigh boats in trash bins</li>
+                </ul>
+                <p><strong>Additional:</strong></p>
+                <ul>
+                    <li>Ensure windows and doors are open during work and closed afterward</li>
+                    <li>Turn off gas, water, and electrical supplies when finished</li>
+                </ul>
+                <div class="chat-message">
+                    <div class="sender">Owoyemi Hameedat:</div>
+                    <div>Owoyemi Hameedat kehinde micro biology 2525...</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>CHM107 Online Practical Session - January 7th, 2025 | University of Lagos</p>
+            <p>Instructor: Ooloba Whenu | Platform: Online Meeting</p>
+            <p>Documentation compiled from session screenshots and announcements</p>
+        </footer>
+    </div>
+
+    <script>
+        // Generate floating icons
+        document.addEventListener('DOMContentLoaded', function() {
+            const iconsContainer = document.getElementById('floating-icons');
+            const icons = [
+                'fas fa-flask', 'fas fa-vial', 'fas fa-fire', 'fas fa-skull-crossbones',
+                'fas fa-exclamation-triangle', 'fas fa-tint', 'fas fa-thermometer-half',
+                'fas fa-weight', 'fas fa-vial-virus', 'fas fa-prescription-bottle',
+                'fas fa-radiation', 'fas fa-biohazard', 'fas fa-mortar-pestle',
+                'fas fa-microscope', 'fas fa-stethoscope'
+            ];
+            
+            // Create 30 floating icons
+            for (let i = 0; i < 30; i++) {
+                const icon = document.createElement('div');
+                icon.className = 'floating-icon';
+                icon.innerHTML = `<i class="${icons[Math.floor(Math.random() * icons.length)]}"></i>`;
+                
+                // Random position and animation
+                icon.style.left = `${Math.random() * 100}%`;
+                icon.style.fontSize = `${Math.random() * 20 + 15}px`;
+                icon.style.animationDuration = `${Math.random() * 20 + 15}s`;
+                icon.style.animationDelay = `${Math.random() * 5}s`;
+                
+                iconsContainer.appendChild(icon);
+            }
+            
+            // Add current date to badge
+            const dateBadge = document.querySelector('.date-badge');
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateBadge.innerHTML = `<i class="far fa-calendar-alt"></i> ${currentDate.toLocaleDateString('en-US', options)}`;
+        });
+    </script>
+</body>
+</html>
